@@ -1,0 +1,21 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  max-width: 1000px;
+  width: 100%;
+}
+
+main {
+  max-width: 1000px;
+  width: 100%;
+}
+
+nav {
+  max-width: 1000px;
+  width: 100%;
+}
