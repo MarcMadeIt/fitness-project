@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AddWorkout from "./AddWorkout";
+import AddWorkout from "./add/AddWorkout";
 
 interface Workout {
   id: number;
@@ -7,7 +7,7 @@ interface Workout {
   workoutType?: string;
 }
 
-const StartSession = () => {
+const AddSession = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([
     { id: 1, isOpen: true },
   ]);
@@ -36,7 +36,7 @@ const StartSession = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 items-center">
       {workouts.map((workout) => (
         <div key={workout.id} className="collapse bg-base-200 rounded-box">
           <input
@@ -52,8 +52,8 @@ const StartSession = () => {
             <span className="font-medium">
               {workout.workoutType || "Add Workout"}
             </span>
-            <div className="w-6 h-6 bg-base-200 rounded-full flex justify-center items-center ring-2 ring-primary">
-              <span className="text-primary text-sm">{workout.id}</span>
+            <div className="w-6 h-6 bg-base-200 rounded-full flex justify-center items-center ring-2 ring-base-content">
+              <span className="text-base-content text-sm">{workout.id}</span>
             </div>
           </div>
           <div className="collapse-content peer-checked:block">
@@ -65,8 +65,11 @@ const StartSession = () => {
           </div>
         </div>
       ))}
+      <div className="mt-6">
+        <button className="btn btn-primary">Complete Workout</button>
+      </div>
     </div>
   );
 };
 
-export default StartSession;
+export default AddSession;

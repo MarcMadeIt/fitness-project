@@ -1,32 +1,31 @@
-import jwt from "jsonwebtoken"
+import jwt from 'jsonwebtoken';
 
 export const secureAuth = (req, res, next) => {
-    const authHeader = req.get('Authorization');
-    if (!authHeader) {
-        req.isLoggedIn = false;
-        return next();
+    let token;
+
+    if (req.cookies && req.cookies.token) {
+        token = req.cookies.token;
+    } else if (req.get("Authorization")) {
+        const authHeader = req.get("Authorization");
+        token = authHeader.split(" ")[1];
     }
 
-    const token = authHeader.split(' ')[1];
-
-    if (!token || token === '') {
+    if (!token) {
         req.isLoggedIn = false;
         return next();
     }
 
     try {
-        decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.userId = decodedToken.userId;
+        req.username = decodedToken.username;
+        req.isLoggedIn = true;
+
+        return next();
     } catch (err) {
         req.isLoggedIn = false;
         return next();
     }
-
-    if (!decodedToken) {
-        req.isLoggedIn = false;
-        return next();
-    }
-
-    req.isLoggedIn = true;
-    req.userId = decodedToken.userId;
-    next();
-}
+};

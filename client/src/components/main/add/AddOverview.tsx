@@ -1,12 +1,12 @@
 import { IoIosFitness } from "react-icons/io";
 import { RiWeightFill } from "react-icons/ri";
 
-const StartOverview = () => {
+const AddOverview = () => {
   return (
-    <div className="bg-base-200 flex flex-row md:flex-col justify-between md:justify-start gap-3 p-5 rounded-2xl ">
-      <h3 className="text-primary">Workout Total</h3>
-      <hr className="h-0 w-full border-1 border-slate-600 hidden md:block" />
-      <div className="flex flex-row md:flex-col gap-3">
+    <div className="bg-base-300 flex flex-row lg:flex-col justify-between lg:justify-start gap-3 p-5 rounded-2xl ">
+      <h3 className="text-primary">Total Overview</h3>
+      <hr className="h-0 w-full border-1 border-slate-600 hidden lg:block" />
+      <div className="flex flex-row lg:flex-col gap-3">
         <h5 className="text-sm flex items-center gap-2">
           <IoIosFitness size={24} /> 3 Sets
         </h5>
@@ -18,4 +18,4 @@ const StartOverview = () => {
   );
 };
 
-export default StartOverview;
+export default AddOverview;

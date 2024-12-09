@@ -1,5 +1,13 @@
 import { useState } from "react";
 import AddType from "./AddType";
+import SelectWorkoutType from "./elements/SelectWorkoutType";
+import { AppDispatch, RootState } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setRepetitions,
+  setSets,
+  setWeight,
+} from "../../../store/workout/workoutSlice";
 
 interface AddWorkoutProps {
   onSave: (workoutType: string) => void;
@@ -8,6 +16,10 @@ interface AddWorkoutProps {
 const AddWorkout = ({ onSave }: AddWorkoutProps) => {
   const [workoutType, setWorkoutType] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const workoutState = useSelector((state: RootState) => state.workout);
+
+  const currentWorkoutType = workoutState.workoutType;
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setWorkoutType(e.target.value);
@@ -25,6 +37,22 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
     setIsModalOpen(false);
   };
 
+  const handleInputChange = (field: string, value: number) => {
+    switch (field) {
+      case "weight":
+        dispatch(setWeight(value));
+        break;
+      case "sets":
+        dispatch(setSets(value));
+        break;
+      case "repetitions":
+        dispatch(setRepetitions(value));
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
       <form
@@ -39,17 +67,11 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
             <div className="label">
               <span className="label-text text-xs">WorkoutType</span>
             </div>
-            <select
-              className="select select-bordered w-full max-w-xs"
-              onChange={handleSelectChange}
-              required
-            >
-              <option value="" disabled selected>
-                Choose type
-              </option>
-              <option>Dead Lift</option>
-              <option>Leg Press</option>
-            </select>
+            {/* Pass the selectedType to SelectWorkoutType */}
+            <SelectWorkoutType
+              handleSelectChange={handleSelectChange}
+              selectedType={workoutType || currentWorkoutType}
+            />
             <div className="label">
               <span></span>
               <button
@@ -59,7 +81,6 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
               >
                 Create WorkoutType?
               </button>
-              {isModalOpen && <AddType onClose={closeModal} />}
             </div>
           </label>
         </div>
@@ -73,6 +94,9 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
               placeholder="10 kg..."
               className="input input-bordered w-full max-w-xs"
               required
+              onChange={(e) =>
+                handleInputChange("weight", Number(e.target.value))
+              }
             />
           </label>
           <div className="flex gap-5">
@@ -85,6 +109,9 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
                 placeholder="3 sets..."
                 className="input input-bordered w-full max-w-xs"
                 required
+                onChange={(e) =>
+                  handleInputChange("sets", Number(e.target.value))
+                }
               />
             </label>
             <label className="form-control w-full max-w-xs">
@@ -96,6 +123,9 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
                 placeholder="8 reps..."
                 className="input input-bordered w-full max-w-xs"
                 required
+                onChange={(e) =>
+                  handleInputChange("repetitions", Number(e.target.value))
+                }
               />
             </label>
           </div>
@@ -109,6 +139,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
           </button>
         </div>
       </form>
+      {isModalOpen && <AddType onClose={closeModal} />}
     </div>
   );
 };

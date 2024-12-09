@@ -23,7 +23,7 @@ const Navbar = () => {
           }
         >
           <HiMiniPlusCircle size={32} />
-          <span className="text-xs">Start</span>
+          <span className="text-xs">Workout</span>
         </NavLink>
         <NavLink
           to="/activity"

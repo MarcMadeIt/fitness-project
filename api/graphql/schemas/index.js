@@ -37,6 +37,7 @@ const graphQlSchema = buildSchema(`
     type AuthData {
         userId: ID!
         token: String!
+        username: String!
         tokenExpiration: Int!
     }
 
@@ -50,7 +51,6 @@ const graphQlSchema = buildSchema(`
         name: String!
         desc: String!
         part: String! 
-        creator: ID! 
     }
 
     input WorkoutLogInput {
@@ -75,6 +75,7 @@ const graphQlSchema = buildSchema(`
         getWorkoutLogs: [WorkoutLog!]!
         getWorkoutSessions: [WorkoutSession!]!
         login(username: String!, password: String!): AuthData!
+        logout: String!
 
     }
 

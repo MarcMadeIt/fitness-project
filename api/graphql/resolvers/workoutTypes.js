@@ -13,44 +13,46 @@ const workoutTypesResolver = {
     },
 
     createWorkoutType: async ({ workoutTypeInput }, req) => {
+
         if (!req.isLoggedIn) {
-            throw new Error('Unauthenticated!')
+            throw new Error("Unauthenticated");
         }
+
         try {
 
-            const creator = await Users.findById(workoutTypeInput.creator);
-
-            if (!creator) {
-                throw new Error('Creator not found!');
+            const checkWorkout = await WorkoutTypes.findOne({ name: workoutTypeInput.name });
+            if (checkWorkout) {
+                throw new Error("WorkoutType already exists, try again!");
             }
 
+            const creator = await Users.findById(req.userId);
+            if (!creator) {
+                throw new Error("Creator not found!");
+            }
 
             const workout = new WorkoutTypes({
                 name: workoutTypeInput.name,
                 desc: workoutTypeInput.desc,
                 part: workoutTypeInput.part,
-                creator: workoutTypeInput.creator,
+                creator: req.userId,
             });
-
 
             const result = await workout.save();
 
             creator.createdWorkout.push(result._id);
             await creator.save();
 
-
             const populatedResult = await WorkoutTypes.findById(result._id)
-                .populate('creator')
+                .populate("creator")
                 .exec();
 
-
             return { ...populatedResult._doc };
-
         } catch (err) {
-            console.log(err);
             throw err;
         }
     },
+
+
 }
 
 export default workoutTypesResolver;

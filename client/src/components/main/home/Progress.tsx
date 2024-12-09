@@ -1,8 +1,6 @@
-import { GiStrong } from "react-icons/gi";
-
 const Progress = () => {
   return (
-    <div className="flex flex-col items-center justify-center py-6 gap-3">
+    <div className="flex flex-col items-center justify-center gap-3 bg-base-200 w-full rounded-lg py-8">
       <div
         className="radial-progress text-primary bg-base-200 border-4 border-base-200"
         style={
@@ -14,11 +12,12 @@ const Progress = () => {
         }
         role="progressbar"
       >
-        <GiStrong size={35} />
+        <span className="text-4xl font-extrabold ">3</span>
       </div>
       <div className="flex flex-col items-center gap-1">
-        <span className="text-3xl font-extrabold">3</span>
-        <span className="text-md font-normal">Sessions</span>
+        <span className="text-ms font-semibold text-primary">
+          Total Workouts
+        </span>
       </div>
     </div>
   );

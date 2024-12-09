@@ -15,18 +15,17 @@ const authResolver = {
     },
 
     createUser: async ({ userInput }) => {
-        const checkUser = await Users.findOne({ username: userInput.username });
-
-        if (checkUser) {
-            throw new Error('Username is already exist!')
-        }
-
         try {
-            const hashedpassword = await bcrypt.hash(userInput.password, 10)
+            const checkUser = await Users.findOne({ username: userInput.username });
+            if (checkUser) {
+                throw new Error('Username already exists!');
+            }
+
+            const hashedPassword = await bcrypt.hash(userInput.password, 10);
 
             const user = new Users({
-                username: userInput.username,
-                password: hashedpassword,
+                username: userInput.username.toLowerCase(),
+                password: hashedPassword,
             });
 
             const result = await user.save();
@@ -34,31 +33,45 @@ const authResolver = {
             return { ...result._doc, password: null };
 
         } catch (err) {
-            console.log(err)
+            throw new Error(err.message);
         }
     },
 
-    login: async ({ username, password }) => {
+    login: async ({ username, password }, { req, res }) => {
         try {
-            const user = await Users.findOne({ username: username });
+            const user = await Users.findOne({ username: username.toLowerCase() });
 
             if (!user) {
-                throw new Error('User does not exist!')
+                throw new Error('Wrong credentials');
             }
 
-            const comparePassword = await bcrypt.compare(password, user.password);
-            if (!comparePassword) {
-                throw new Error('Wrong password, try again! Good luck!')
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                throw new Error('Wrong credentials');
             }
 
-            const token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign(
+                { userId: user.id, username: user.username },
+                process.env.JWT_SECRET,
+                { expiresIn: '3h' }
+            );
 
-            return { userId: user.id, token: token, tokenExpiration: 1 };
-
+            return {
+                token,
+            };
         } catch (err) {
-
+            console.error(err);
+            throw new Error('Server error during login');
         }
-    }
+    },
+
+
+
+    logout: async (_, __, { res }) => {
+        res.clearCookie('token');
+        return 'User logged out successfully';
+    },
 }
 
 export default authResolver;

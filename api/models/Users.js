@@ -22,4 +22,10 @@ const UsersSchema = new Schema({
 
 }, { timestamps: true });
 
+UsersSchema.pre('save', function (next) {
+
+    this.username = this.username.toLowerCase();
+    next();
+});
+
 export default mongoose.model("Users", UsersSchema)
