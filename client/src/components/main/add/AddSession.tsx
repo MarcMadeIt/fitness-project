@@ -1,38 +1,33 @@
-import { useState } from "react";
-import AddWorkout from "./add/AddWorkout";
-
-interface Workout {
-  id: number;
-  isOpen: boolean;
-  workoutType?: string;
-}
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNewWorkout,
+  completeWorkout,
+  resetSession,
+  saveWorkout,
+  toggleWorkoutVisibility,
+} from "../../../store/workout/workoutSlice";
+import { RootState } from "../../../store/store";
+import AddWorkout from "./AddWorkout";
 
 const AddSession = () => {
-  const [workouts, setWorkouts] = useState<Workout[]>([
-    { id: 1, isOpen: true },
-  ]);
+  const dispatch = useDispatch();
+  const workouts = useSelector((state: RootState) => state.workout.workouts);
 
   const saveAndAddNewWorkout = (id: number, workoutType: string) => {
-    const updatedWorkouts = workouts.map((workout) =>
-      workout.id === id
-        ? { ...workout, workoutType, isOpen: false }
-        : { ...workout, isOpen: false }
-    );
-
-    setWorkouts([
-      ...updatedWorkouts,
-      { id: workouts.length + 1, isOpen: true },
-    ]);
+    dispatch(saveWorkout({ id, workoutType }));
+    dispatch(addNewWorkout());
   };
 
   const toggleWorkout = (id: number) => {
-    setWorkouts((prev) =>
-      prev.map((workout) =>
-        workout.id === id
-          ? { ...workout, isOpen: !workout.isOpen }
-          : { ...workout, isOpen: false }
-      )
-    );
+    dispatch(toggleWorkoutVisibility(id));
+  };
+
+  const completeWorkoutHandler = (id: number) => {
+    dispatch(completeWorkout(id));
+  };
+
+  const resetSessionHandler = () => {
+    dispatch(resetSession());
   };
 
   return (
@@ -47,7 +42,7 @@ const AddSession = () => {
           />
           <div
             className="collapse-title cursor-pointer peer-checked:bg-base-300 peer-checked:text-primary flex justify-between px-5"
-            onClick={() => toggleWorkout(workout.id)}
+            onClick={() => toggleWorkout(workout.id)} // Toggle workout visibility
           >
             <span className="font-medium">
               {workout.workoutType || "Add Workout"}
@@ -58,6 +53,7 @@ const AddSession = () => {
           </div>
           <div className="collapse-content peer-checked:block">
             <AddWorkout
+              workoutId={workout.id}
               onSave={(workoutType) => {
                 saveAndAddNewWorkout(workout.id, workoutType);
               }}
@@ -65,8 +61,18 @@ const AddSession = () => {
           </div>
         </div>
       ))}
-      <div className="mt-6">
-        <button className="btn btn-primary">Complete Workout</button>
+      <div className="mt-6 flex flex-col items-center gap-4">
+        <button
+          className="btn btn-primary"
+          onClick={() =>
+            completeWorkoutHandler(workouts[workouts.length - 1].id)
+          }
+        >
+          Complete Workout
+        </button>
+        <button className="btn btn-sm" onClick={resetSessionHandler}>
+          Reset Session
+        </button>
       </div>
     </div>
   );

@@ -57,15 +57,12 @@ const authResolver = {
                 { expiresIn: '3h' }
             );
 
-            return {
-                token,
-            };
+            return { token };
         } catch (err) {
             console.error(err);
-            throw new Error('Server error during login');
+            throw new Error(err.message || 'Server error during login');
         }
     },
-
 
 
     logout: async (_, __, { res }) => {

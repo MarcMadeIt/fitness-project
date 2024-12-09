@@ -4,12 +4,12 @@ import Activity from "./pages/Activity";
 import Home from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import Topbar from "./components/layout/Topbar";
-import Start from "./pages/Add";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import cookie from "js-cookie";
 import ProtectedRoute from "./secure/ProtectedRoute";
 import { login } from "./store/auth/authSlice";
+import Add from "./pages/Add";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const App = () => {
         <header>
           <Topbar />
         </header>
-        <main className="px-3 py-3 gap-5 mb-16">
+        <main className="px-3 py-3 gap-5 mb-20">
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -36,7 +36,7 @@ const App = () => {
                 path="/add"
                 element={
                   <ProtectedRoute>
-                    <Start />
+                    <Add />
                   </ProtectedRoute>
                 }
               />

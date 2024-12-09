@@ -1,7 +1,7 @@
 import AddOverview from "../components/main/add/AddOverview";
-import AddSession from "../components/main/AddSession";
+import AddSession from "../components/main/add/AddSession";
 
-const Start = () => {
+const Add = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-3 md:gap-5">
       <div className="flex-1">
@@ -14,4 +14,4 @@ const Start = () => {
   );
 };
 
-export default Start;
+export default Add;

@@ -32,12 +32,12 @@ const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
     setTimeout(async () => {
       const requestBody = {
         query: `
-        query {
-          login(username: "${username}", password: "${password}") {
-            token
+          query {
+            login(username: "${username}", password: "${password}") {
+              token
+            }
           }
-        }
-      `,
+        `,
       };
 
       try {
@@ -51,20 +51,21 @@ const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
 
         const result = response.data;
 
-        if (response.status === 200 && !result.errors) {
-          const { token } = result.data.login;
-
-          localStorage.setItem("token", token);
-          dispatch(login({ token }));
-          closeModal();
-          clearForm();
+        if (result.errors) {
+          setError(result.errors[0]?.message || "Something went wrong.");
         } else {
-          const errorMessage =
-            result.errors?.[0]?.message || "Something went wrong.";
-          setError(errorMessage);
+          if (result.data?.login?.token) {
+            const { token } = result.data.login;
+            localStorage.setItem("token", token);
+            dispatch(login({ token }));
+            closeModal();
+            clearForm();
+          } else {
+            setError("Unexpected error: No token received.");
+          }
         }
       } catch (err) {
-        setError("Server error: Unable to login");
+        setError("Wrong Credentials, try again");
       } finally {
         setLoading(false);
       }

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AddType from "./AddType";
 import SelectWorkoutType from "./elements/SelectWorkoutType";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,34 +6,31 @@ import {
   setRepetitions,
   setSets,
   setWeight,
+  setWorkoutType,
 } from "../../../store/workout/workoutSlice";
+import AddType from "./AddType";
 
 interface AddWorkoutProps {
-  onSave: (workoutType: string) => void;
+  onSave: (workoutType: string, id: number) => void;
+  workoutId: number;
 }
 
-const AddWorkout = ({ onSave }: AddWorkoutProps) => {
-  const [workoutType, setWorkoutType] = useState<string>("");
+const AddWorkout = ({ onSave, workoutId }: AddWorkoutProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
+
   const workoutState = useSelector((state: RootState) => state.workout);
 
-  const currentWorkoutType = workoutState.workoutType;
-
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setWorkoutType(e.target.value);
+    dispatch(setWorkoutType(e.target.value));
   };
 
   const handleSave = () => {
-    onSave(workoutType);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+    onSave(workoutState.workoutType, workoutId);
+    dispatch(setWorkoutType(""));
+    dispatch(setWeight(null));
+    dispatch(setSets(null));
+    dispatch(setRepetitions(null));
   };
 
   const handleInputChange = (field: string, value: number) => {
@@ -53,6 +49,14 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <form
@@ -67,10 +71,9 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
             <div className="label">
               <span className="label-text text-xs">WorkoutType</span>
             </div>
-            {/* Pass the selectedType to SelectWorkoutType */}
             <SelectWorkoutType
               handleSelectChange={handleSelectChange}
-              selectedType={workoutType || currentWorkoutType}
+              selectedType={workoutState.workoutType}
             />
             <div className="label">
               <span></span>
@@ -94,6 +97,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
               placeholder="10 kg..."
               className="input input-bordered w-full max-w-xs"
               required
+              value={workoutState.weight || ""}
               onChange={(e) =>
                 handleInputChange("weight", Number(e.target.value))
               }
@@ -109,6 +113,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
                 placeholder="3 sets..."
                 className="input input-bordered w-full max-w-xs"
                 required
+                value={workoutState.sets || ""}
                 onChange={(e) =>
                   handleInputChange("sets", Number(e.target.value))
                 }
@@ -123,6 +128,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
                 placeholder="8 reps..."
                 className="input input-bordered w-full max-w-xs"
                 required
+                value={workoutState.repetitions || ""}
                 onChange={(e) =>
                   handleInputChange("repetitions", Number(e.target.value))
                 }
@@ -130,7 +136,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
             </label>
           </div>
         </div>
-        <div className=" mt-5">
+        <div className="mt-5">
           <button
             type="submit"
             className="btn btn-outline btn-primary w-full md:w-auto"
@@ -139,6 +145,7 @@ const AddWorkout = ({ onSave }: AddWorkoutProps) => {
           </button>
         </div>
       </form>
+
       {isModalOpen && <AddType onClose={closeModal} />}
     </div>
   );
