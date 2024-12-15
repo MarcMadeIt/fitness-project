@@ -28,7 +28,7 @@ const App = () => {
         <header>
           <Topbar />
         </header>
-        <main className="px-3 py-3 gap-5 mb-20">
+        <main className="px-3 py-3 gap-5 mb-32">
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Home />} />

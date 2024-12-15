@@ -1,31 +1,30 @@
-import jwt from 'jsonwebtoken';
+// Your middleware file
+import jwt from "jsonwebtoken";
 
 export const secureAuth = (req, res, next) => {
     let token;
 
-    if (req.cookies && req.cookies.token) {
-        token = req.cookies.token;
-    } else if (req.get("Authorization")) {
+    if (req.get("Authorization")) {
         const authHeader = req.get("Authorization");
+        console.log("Authorization Header:", authHeader);
         token = authHeader.split(" ")[1];
     }
 
     if (!token) {
-        req.isLoggedIn = false;
+        console.log("No token found");
+        req.userId = null;
         return next();
     }
 
     try {
-
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
+        console.log("Decoded Token:", decodedToken);
         req.userId = decodedToken.userId;
         req.username = decodedToken.username;
-        req.isLoggedIn = true;
-
         return next();
     } catch (err) {
-        req.isLoggedIn = false;
+        console.error("Token verification failed:", err.message);
+        req.userId = null;
         return next();
     }
 };

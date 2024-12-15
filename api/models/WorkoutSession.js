@@ -6,12 +6,12 @@ const WorkoutSessionSchema = new Schema({
 
     creator: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Users',
         required: true
     },
     workoutLogs: [{
         type: Schema.Types.ObjectId,
-        ref: 'WorkoutLog'
+        ref: 'WorkoutLogs'
     }],
 
 }, { timestamps: true });

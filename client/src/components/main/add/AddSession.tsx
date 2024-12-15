@@ -1,80 +1,158 @@
 import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../../../store/store";
 import {
-  addNewWorkout,
-  completeWorkout,
-  resetSession,
-  saveWorkout,
-  toggleWorkoutVisibility,
+  resetCurrentWorkout,
+  addWorkout,
+  toggleWorkout,
+  addWorkoutLog,
 } from "../../../store/workout/workoutSlice";
-import { RootState } from "../../../store/store";
+import { submitWorkoutSession } from "../../../store/workout/workoutThunks";
 import AddWorkout from "./AddWorkout";
+import { useState } from "react";
+import Modal from "./elements/Modal";
+import { v4 as uuidv4 } from "uuid";
+import Alert from "../../messages/Alert";
 
 const AddSession = () => {
-  const dispatch = useDispatch();
-  const workouts = useSelector((state: RootState) => state.workout.workouts);
+  const dispatch = useDispatch<AppDispatch>();
+  const { currentWorkoutLogs, workouts, workoutTypes } = useSelector(
+    (state: RootState) => state.workout
+  );
+  const userId = useSelector((state: RootState) => state.auth.user?.userId);
 
-  const saveAndAddNewWorkout = (id: number, workoutType: string) => {
-    dispatch(saveWorkout({ id, workoutType }));
-    dispatch(addNewWorkout());
+  const [modalTitle, setModalTitle] = useState<string>("");
+  const [modalMessage, setModalMessage] = useState<string>("");
+  const [modalCallback, setModalCallback] = useState<() => void>(
+    () => () => {}
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  const handleSaveWorkout = (
+    workoutType: { _id: string; name: string },
+    workoutId: number,
+    weight: number | null,
+    sets: number | null,
+    reps: number | null,
+    creator: string
+  ) => {
+    dispatch(
+      addWorkoutLog({
+        _id: uuidv4(),
+        workoutType,
+        weight,
+        sets,
+        reps,
+        creator,
+      })
+    );
+
+    dispatch(addWorkout({ id: workoutId, name: workoutType.name }));
   };
 
-  const toggleWorkout = (id: number) => {
-    dispatch(toggleWorkoutVisibility(id));
+  const handleCompleteSession = async () => {
+    if (!userId) {
+      console.error("User not authenticated!");
+      return;
+    }
+
+    try {
+      await dispatch(
+        submitWorkoutSession({
+          userId,
+          workoutLogs: currentWorkoutLogs,
+        })
+      );
+      closeModal();
+      setAlertMessage("Session is succesfully completed!");
+    } catch (error) {
+      console.error("Error completing session:", error);
+    }
   };
 
-  const completeWorkoutHandler = (id: number) => {
-    dispatch(completeWorkout(id));
+  const handleResetSession = () => {
+    dispatch(resetCurrentWorkout());
+    closeModal();
+    setAlertMessage("The session is reset");
   };
 
-  const resetSessionHandler = () => {
-    dispatch(resetSession());
+  const handleToggleWorkout = (workoutId: number) => {
+    dispatch(toggleWorkout(workoutId));
+  };
+
+  const openModal = (action: "complete" | "reset") => {
+    if (action === "complete") {
+      setModalTitle("Complete Session");
+      setModalMessage("Are you sure you want to complete the session?");
+      setModalCallback(() => handleCompleteSession);
+    } else if (action === "reset") {
+      setModalTitle("Reset Session");
+      setModalMessage("Are you sure you want to reset the session?");
+      setModalCallback(() => handleResetSession);
+    }
+
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center">
-      {workouts.map((workout) => (
-        <div key={workout.id} className="collapse bg-base-200 rounded-box">
-          <input
-            type="checkbox"
-            className="peer hidden"
-            checked={workout.isOpen}
-            readOnly
-          />
+    <>
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
+      <div className="flex flex-col gap-3 items-center">
+        {workouts.map((workout) => (
           <div
-            className="collapse-title cursor-pointer peer-checked:bg-base-300 peer-checked:text-primary flex justify-between px-5"
-            onClick={() => toggleWorkout(workout.id)} // Toggle workout visibility
+            key={workout.id}
+            className={`collapse bg-base-200 rounded-box ${
+              workout.isOpen ? "collapse-open" : "collapse-close"
+            }`}
           >
-            <span className="font-medium">
-              {workout.workoutType || "Add Workout"}
-            </span>
-            <div className="w-6 h-6 bg-base-200 rounded-full flex justify-center items-center ring-2 ring-base-content">
-              <span className="text-base-content text-sm">{workout.id}</span>
+            <div
+              className="collapse-title cursor-pointer bg-base-300 flex justify-between px-5"
+              onClick={() => handleToggleWorkout(workout.id)}
+            >
+              <span className="font-medium">
+                {workout.workoutTypeName || workout.name}
+              </span>
+              <span className="w-8 h-8 ring-2 ring-primary rounded-full flex items-center justify-center font-bold">
+                {workout.id + 1}
+              </span>
+            </div>
+            <div className="collapse-content">
+              <AddWorkout
+                workoutId={workout.id}
+                onSave={handleSaveWorkout}
+                isOpen={workout.isOpen}
+                workoutTypes={workoutTypes}
+              />
             </div>
           </div>
-          <div className="collapse-content peer-checked:block">
-            <AddWorkout
-              workoutId={workout.id}
-              onSave={(workoutType) => {
-                saveAndAddNewWorkout(workout.id, workoutType);
-              }}
-            />
-          </div>
+        ))}
+        <div className="mt-6 flex flex-col items-center gap-4">
+          <button
+            className="btn btn-primary"
+            onClick={() => openModal("complete")}
+          >
+            Complete Session
+          </button>
+          <button className="btn btn-sm" onClick={() => openModal("reset")}>
+            Reset Session
+          </button>
         </div>
-      ))}
-      <div className="mt-6 flex flex-col items-center gap-4">
-        <button
-          className="btn btn-primary"
-          onClick={() =>
-            completeWorkoutHandler(workouts[workouts.length - 1].id)
-          }
-        >
-          Complete Workout
-        </button>
-        <button className="btn btn-sm" onClick={resetSessionHandler}>
-          Reset Session
-        </button>
+        {isModalOpen && (
+          <Modal
+            title={modalTitle}
+            message={modalMessage}
+            onConfirm={modalCallback}
+            onClose={closeModal}
+          />
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

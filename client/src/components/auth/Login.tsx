@@ -97,7 +97,7 @@ const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
                     id="username"
                     autoComplete="username"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
                 </label>

@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 interface SelectWorkoutTypeProps {
-  handleSelectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectChange: (
+    selectedType: { _id: string; name: string } | null
+  ) => void;
   selectedType: string;
 }
 
@@ -9,8 +12,10 @@ const SelectWorkoutType = ({
   handleSelectChange,
   selectedType,
 }: SelectWorkoutTypeProps) => {
-  const [workoutTypes, setWorkoutTypes] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [workoutTypes, setWorkoutTypes] = useState<
+    { _id: string; name: string }[]
+  >([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -22,6 +27,7 @@ const SelectWorkoutType = ({
         query: `
           query {
             getWorkoutTypes {
+              _id
               name
             }
           }
@@ -29,23 +35,19 @@ const SelectWorkoutType = ({
       };
 
       try {
-        const response = await fetch("http://localhost:3000/graphql", {
-          method: "POST",
-          body: JSON.stringify(requestBody),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await axios.post(
+          "http://localhost:3000/graphql",
+          requestBody,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
 
-        const result = await response.json();
-
-        if (response.ok && result?.data?.getWorkoutTypes) {
-          setWorkoutTypes(
-            result.data.getWorkoutTypes.map(
-              (type: { name: string }) => type.name
-            )
-          );
+        if (response.data?.data?.getWorkoutTypes) {
+          setWorkoutTypes(response.data.data.getWorkoutTypes);
         } else {
           setError("Failed to fetch workout types");
         }
@@ -60,27 +62,29 @@ const SelectWorkoutType = ({
     fetchTypes();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = e.target.value;
+    const selectedType =
+      workoutTypes.find((type) => type._id === selectedId) || null;
+    handleSelectChange(selectedType);
+  };
 
   return (
     <select
       className="select select-bordered w-full max-w-xs"
-      onChange={handleSelectChange}
+      onChange={handleChange}
       value={selectedType}
       required
     >
       <option value="" disabled>
         Choose type
       </option>
-      {workoutTypes.map((name, index) => (
-        <option key={index} value={name}>
-          {name}
+      {workoutTypes.map((type) => (
+        <option key={type._id} value={type._id}>
+          {type.name}
         </option>
       ))}
     </select>

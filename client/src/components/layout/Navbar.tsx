@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="flex md:hidden btm-nav btm-nav-lg">
+      <div className="flex md:hidden btm-nav btm-nav-lg z-10">
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -36,7 +36,7 @@ const Navbar = () => {
         </NavLink>
       </div>
       {/* Desktop Navbar */}
-      <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 md:flex hidden">
+      <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 md:flex hidden z-10 shadow-xl">
         <ul className="menu menu-lg menu-horizontal bg-base-200 rounded-box mt-6">
           <li className="active">
             <NavLink to="/" className="tooltip" data-tip="Home">

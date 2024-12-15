@@ -14,7 +14,7 @@ const workoutTypesResolver = {
 
     createWorkoutType: async ({ workoutTypeInput }, req) => {
 
-        if (!req.isLoggedIn) {
+        if (!req.secureAuth) {
             throw new Error("Unauthenticated");
         }
 

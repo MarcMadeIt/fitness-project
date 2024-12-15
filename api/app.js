@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(secureAuth);
 
+
 app.use(
     "/graphql",
     graphqlHTTP((req, res) => {
@@ -28,6 +29,11 @@ app.use(
             schema: graphQlSchema,
             rootValue: rootResolver,
             graphiql: true,
+            context: {
+                req, res,
+                userId: req.userId,
+                secureAuth: req.secureAuth
+            },
         };
     })
 );

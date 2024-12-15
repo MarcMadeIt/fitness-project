@@ -91,7 +91,7 @@ const AddType = ({ onClose }: AddTypeProps) => {
       } finally {
         setLoading(false);
       }
-    }, 2000); // Delay of 2 seconds
+    }, 2000);
   };
 
   return (
@@ -99,7 +99,7 @@ const AddType = ({ onClose }: AddTypeProps) => {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <div className="modal modal-open modal-bottom sm:modal-middle">
+      <div className="modal modal-open modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Create WorkoutType</h3>
           <p className="py-4">Here, you can create a new workout type.</p>

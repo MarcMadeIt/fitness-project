@@ -4,8 +4,8 @@ const graphQlSchema = buildSchema(`
     type WorkoutSession {
         _id: ID!
         creator: User!
-        workoutLogs: [WorkoutLog!]! 
-    
+        workoutLogs: [WorkoutLog!]!
+        createdAt: String! 
     }
 
     type WorkoutLog {
@@ -59,14 +59,12 @@ const graphQlSchema = buildSchema(`
         sets: Int!
         reps: Int!
         creator: ID!
-        createdAt: String!
-        sessionId: ID! 
     }
 
     input WorkoutSessionInput {
         creator: ID!
         workoutLogIds: [ID!]!
-        createdAt: String! 
+         
     }
 
     type RootQuery {
@@ -74,6 +72,8 @@ const graphQlSchema = buildSchema(`
         getWorkoutTypes: [WorkoutType!]!
         getWorkoutLogs: [WorkoutLog!]!
         getWorkoutSessions: [WorkoutSession!]!
+        getAllWorkoutSessions: [WorkoutSession!]!
+        getWorkoutLimitSessions: [WorkoutSession!]!
         login(username: String!, password: String!): AuthData!
         logout: String!
 

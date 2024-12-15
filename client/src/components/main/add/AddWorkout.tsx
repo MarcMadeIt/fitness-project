@@ -1,109 +1,118 @@
 import { useState } from "react";
-import SelectWorkoutType from "./elements/SelectWorkoutType";
-import { AppDispatch, RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setRepetitions,
-  setSets,
-  setWeight,
-  setWorkoutType,
-} from "../../../store/workout/workoutSlice";
+import { AppDispatch, RootState } from "../../../store/store";
+import { updateWorkoutData } from "../../../store/workout/workoutSlice";
+import SelectWorkoutType from "./elements/SelectWorkoutType";
 import AddType from "./AddType";
 
 interface AddWorkoutProps {
-  onSave: (workoutType: string, id: number) => void;
+  onSave: (
+    workoutType: { _id: string; name: string },
+    id: number,
+    weight: number | null,
+    sets: number | null,
+    reps: number | null,
+    creator: string
+  ) => void;
   workoutId: number;
+  isOpen: boolean;
+  workoutTypes: { _id: string; name: string }[];
 }
 
-const AddWorkout = ({ onSave, workoutId }: AddWorkoutProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+const AddWorkout = ({ onSave, workoutId, isOpen }: AddWorkoutProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const workout = useSelector((state: RootState) =>
+    state.workout.workouts.find((w) => w.id === workoutId)
+  );
+  const userId = useSelector((state: RootState) => state.auth.user?.userId);
 
-  const workoutState = useSelector((state: RootState) => state.workout);
+  const [selectedWorkoutType, setSelectedWorkoutType] = useState<{
+    _id: string;
+    name: string;
+  } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setWorkoutType(e.target.value));
-  };
+  const handleSelectChange = (
+    selectedType: { _id: string; name: string } | null
+  ) => {
+    setSelectedWorkoutType(selectedType);
 
-  const handleSave = () => {
-    onSave(workoutState.workoutType, workoutId);
-    dispatch(setWorkoutType(""));
-    dispatch(setWeight(null));
-    dispatch(setSets(null));
-    dispatch(setRepetitions(null));
-  };
-
-  const handleInputChange = (field: string, value: number) => {
-    switch (field) {
-      case "weight":
-        dispatch(setWeight(value));
-        break;
-      case "sets":
-        dispatch(setSets(value));
-        break;
-      case "repetitions":
-        dispatch(setRepetitions(value));
-        break;
-      default:
-        break;
+    if (selectedType) {
+      dispatch(
+        updateWorkoutData({
+          id: workoutId,
+          workoutType: selectedType._id,
+        })
+      );
     }
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const handleInputChange = (field: string, value: number | string | null) => {
+    dispatch(updateWorkoutData({ id: workoutId, [field]: value }));
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleSave = () => {
+    if (workout && userId && selectedWorkoutType) {
+      onSave(
+        selectedWorkoutType,
+        workoutId,
+        workout.weight || null,
+        workout.sets || null,
+        workout.reps || null,
+        userId
+      );
+    }
   };
 
   return (
     <div>
-      <form
-        className="flex flex-col mt-2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSave();
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text text-xs">WorkoutType</span>
-            </div>
-            <SelectWorkoutType
-              handleSelectChange={handleSelectChange}
-              selectedType={workoutState.workoutType}
-            />
-            <div className="label">
-              <span></span>
-              <button
-                type="button"
-                className="link link-primary text-xs"
-                onClick={openModal}
-              >
-                Create WorkoutType?
-              </button>
-            </div>
-          </label>
-        </div>
-        <div className="flex gap-2 flex-col md:flex-row">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text text-xs">Weight</span>
-            </div>
-            <input
-              type="number"
-              placeholder="10 kg..."
-              className="input input-bordered w-full max-w-xs"
-              required
-              value={workoutState.weight || ""}
-              onChange={(e) =>
-                handleInputChange("weight", Number(e.target.value))
-              }
-            />
-          </label>
-          <div className="flex gap-5">
+      {isOpen && workout && (
+        <form
+          className="flex flex-col mt-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSave();
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text text-xs">WorkoutType</span>
+              </div>
+              <SelectWorkoutType
+                handleSelectChange={handleSelectChange}
+                selectedType={
+                  selectedWorkoutType ? selectedWorkoutType._id : ""
+                }
+              />
+              <div className="label">
+                <span></span>
+                <button
+                  type="button"
+                  className="link link-primary text-xs"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Create WorkoutType?
+                </button>
+              </div>
+            </label>
+          </div>
+          <div className="flex gap-2 flex-col md:flex-row">
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text text-xs">Weight</span>
+              </div>
+              <input
+                type="number"
+                placeholder="10 kg..."
+                className="input input-bordered w-full max-w-xs"
+                value={workout.weight || ""}
+                onChange={(e) =>
+                  handleInputChange("weight", Number(e.target.value))
+                }
+                required
+              />
+            </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text text-xs">Sets</span>
@@ -112,41 +121,40 @@ const AddWorkout = ({ onSave, workoutId }: AddWorkoutProps) => {
                 type="number"
                 placeholder="3 sets..."
                 className="input input-bordered w-full max-w-xs"
-                required
-                value={workoutState.sets || ""}
+                value={workout.sets || ""}
                 onChange={(e) =>
                   handleInputChange("sets", Number(e.target.value))
                 }
+                required
               />
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text text-xs">Repitions</span>
+                <span className="label-text text-xs">Repetitions</span>
               </div>
               <input
                 type="number"
                 placeholder="8 reps..."
                 className="input input-bordered w-full max-w-xs"
-                required
-                value={workoutState.repetitions || ""}
+                value={workout.reps || ""}
                 onChange={(e) =>
-                  handleInputChange("repetitions", Number(e.target.value))
+                  handleInputChange("reps", Number(e.target.value))
                 }
+                required
               />
             </label>
           </div>
-        </div>
-        <div className="mt-5">
-          <button
-            type="submit"
-            className="btn btn-outline btn-primary w-full md:w-auto"
-          >
-            Add Workout
-          </button>
-        </div>
-      </form>
-
-      {isModalOpen && <AddType onClose={closeModal} />}
+          <div className="mt-5">
+            <button
+              type="submit"
+              className="btn btn-outline btn-primary w-full md:w-auto"
+            >
+              Save Workout
+            </button>
+          </div>
+        </form>
+      )}
+      {isModalOpen && <AddType onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };

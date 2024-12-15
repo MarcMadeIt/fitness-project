@@ -1,6 +1,5 @@
-import Users from "../../models/Users.js";
 import WorkoutLogs from "../../models/WorkoutLogs.js";
-import WorkoutSession from "../../models/WorkoutSession.js";
+import WorkoutTypes from "../../models/WorkoutTypes.js";
 
 const workoutLogsResolver = {
 
@@ -17,46 +16,32 @@ const workoutLogsResolver = {
         }
     },
 
+    createWorkoutLog: async ({ workoutLogInput }, req) => {
 
-    createWorkoutLog: async ({ workoutLogInput }) => {
-        if (!req.secureAuth) {
-            throw new Error('Unauthenticated!')
-        }
         try {
-            const user = await Users.findById(workoutLogInput.user);
-            if (!user) {
-                throw new Error('User not found');
-            }
+            const userId = req.userId;
 
-            const session = await WorkoutSession.findById(workoutLogInput.sessionId);
-            if (!session) {
-                throw new Error('Session not found');
+            const workoutType = await WorkoutTypes.findById(workoutLogInput.workoutTypeId);
+
+            if (!workoutType) {
+                throw new Error("Workout type not found");
             }
 
             const log = new WorkoutLogs({
-                workoutType: workoutLogInput.workoutTypeId,
+                workoutType: workoutType._id,
                 weight: workoutLogInput.weight,
                 sets: workoutLogInput.sets,
                 reps: workoutLogInput.reps,
-                creator: user._id,
+                creator: userId,
             });
 
-
+            // Save workout log
             const result = await log.save();
 
-
-            session.workoutLogs.push(result._id);
-            await session.save();
-
-            const populatedResult = await WorkoutLogs.findById(result._id)
-                .populate('workoutType')
-                .exec();
-
-            return { ...populatedResult._doc };
-
+            return { ...result._doc };
         } catch (err) {
-            console.log(err);
-            throw err;
+            console.error(err);
+            throw new Error("Error creating workout log");
         }
     },
 }
