@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({
     origin: ['https://staystrong.vercel.app', 'http://localhost:5173'],
     credentials: true,
-    methods: ["POST"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
