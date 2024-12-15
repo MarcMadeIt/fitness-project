@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/app.js",
+      "src": "./app.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/graphql",
-      "dest": "api/app.js"
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
