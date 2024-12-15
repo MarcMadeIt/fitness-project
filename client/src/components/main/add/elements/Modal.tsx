@@ -21,7 +21,7 @@ const Modal = ({ title, message, onConfirm, onClose }: ModalProps) => {
               Close
             </button>
           </form>
-          <button className="btn btn-primary" onClick={onConfirm}>
+          <button className="btn btn-outline btn-primary" onClick={onConfirm}>
             Confirm
           </button>
         </div>

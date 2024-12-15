@@ -11,7 +11,7 @@ import { secureAuth } from "./middleware/middleware.js";
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://staystrong.vercel.app',
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -38,6 +38,13 @@ app.use(
     })
 );
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster-1.qktqy.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority&appName=Cluster-1`)
-    .then(() => app.listen(3000))
-    .catch((err) => console.log(err));
+const MONGO_URI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster-1.qktqy.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority&appName=Cluster-1`;
+
+export default async function handler(req, res) {
+    if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(MONGO_URI);
+    }
+
+    // Pass the Express app to Vercel's serverless handler
+    await app(req, res);
+}
