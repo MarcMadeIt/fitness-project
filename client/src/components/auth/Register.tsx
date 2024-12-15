@@ -63,6 +63,8 @@ const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
         }
       );
 
+      console.log("GraphQL Endpoint:", graphqlEndpoint);
+
       const result = response.data;
 
       if (response.status === 200 && !result.errors) {
