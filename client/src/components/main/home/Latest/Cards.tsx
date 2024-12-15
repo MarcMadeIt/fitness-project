@@ -10,8 +10,13 @@ interface WorkoutSession {
     username: string;
   };
   createdAt: string;
-  workoutLogs?: WorkoutLog[]; // Optional chaining for workoutLogs
+  workoutLogs?: WorkoutLog[];
 }
+
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
 
 const Cards = () => {
   const [listLimitSessions, setListLimitSessions] = useState<WorkoutSession[]>(
@@ -50,16 +55,12 @@ const Cards = () => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:3000/graphql",
-          requestBody,
-          {
-            withCredentials: true,
-            headers: {
-              Authorization: token ? `Bearer ${token}` : "",
-            },
-          }
-        );
+        const response = await axios.post(graphqlEndpoint, requestBody, {
+          withCredentials: true,
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
 
         if (response.status === 200) {
           setListLimitSessions(response.data.data.getWorkoutLimitSessions);

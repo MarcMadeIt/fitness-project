@@ -9,6 +9,11 @@ type RegisterProps = {
   openLoginModal: () => void;
 };
 
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
+
 const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,9 +44,8 @@ const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
     setPasswordsMatch(true);
 
     try {
-      // Use axios to send the request
       const response = await axios.post(
-        "http://localhost:3000/graphql",
+        graphqlEndpoint,
         {
           query: `
           mutation {

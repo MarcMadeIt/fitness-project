@@ -10,6 +10,11 @@ type LoginProps = {
   openRegisterModal: () => void;
 };
 
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
+
 const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState<string>("");
@@ -41,13 +46,9 @@ const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:3000/graphql",
-          requestBody,
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        const response = await axios.post(graphqlEndpoint, requestBody, {
+          headers: { "Content-Type": "application/json" },
+        });
 
         const result = response.data;
 

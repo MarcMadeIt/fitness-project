@@ -8,6 +8,11 @@ interface AddTypeProps {
   onClose: () => void;
 }
 
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
+
 const AddType = ({ onClose }: AddTypeProps) => {
   const [name, setName] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
@@ -60,18 +65,13 @@ const AddType = ({ onClose }: AddTypeProps) => {
       };
 
       try {
-        // Use axios for making the GraphQL request
-        const response = await axios.post(
-          "http://localhost:3000/graphql",
-          requestBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true, // Enable cookies if needed for authentication
-          }
-        );
+        const response = await axios.post(graphqlEndpoint, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
 
         const result = response.data;
 

@@ -15,7 +15,10 @@ export const submitWorkoutSession = createAsyncThunk(
     userId: string;
     workoutLogs: WorkoutLog[];
   }) => {
-    const GRAPHQL_ENDPOINT = "http://localhost:3000/graphql";
+    const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
 
     const token = getTokenFromStorage();
     if (!token) {
@@ -43,7 +46,7 @@ export const submitWorkoutSession = createAsyncThunk(
             `,
           };
 
-          const response = await axios.post(GRAPHQL_ENDPOINT, logQuery, {
+          const response = await axios.post(graphqlEndpoint, logQuery, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`, 
@@ -73,7 +76,7 @@ export const submitWorkoutSession = createAsyncThunk(
         `,
       };
 
-      const sessionResponse = await axios.post(GRAPHQL_ENDPOINT, sessionQuery, {
+      const sessionResponse = await axios.post(graphqlEndpoint, sessionQuery, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,  // Include token in headers

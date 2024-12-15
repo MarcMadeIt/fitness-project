@@ -13,6 +13,11 @@ interface WorkoutSession {
   workoutLogs: WorkoutLog[];
 }
 
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
+
 const ActivityListAll = () => {
   const [listSessions, setListSessions] = useState<WorkoutSession[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,22 +51,17 @@ const ActivityListAll = () => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:3000/graphql",
-          requestBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.post(graphqlEndpoint, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
 
         if (
           response.status === 200 &&
           response.data.data?.getAllWorkoutSessions
         ) {
-          // Sørg for, at data er i det format, du forventer
           setListSessions(response.data.data.getAllWorkoutSessions || []);
         } else {
           setError("Failed to fetch sessions: " + response.statusText);
