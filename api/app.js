@@ -24,10 +24,7 @@ app.use(secureAuth);
 app.use(
     "/graphql",
     graphqlHTTP((req, res) => {
-        console.log("GraphQL Context:", {
-            userId: req.userId,
-            secureAuth: req.secureAuth,
-        });
+
         return {
             schema: graphQlSchema,
             rootValue: rootResolver,
@@ -45,3 +42,6 @@ app.use(
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster-1.qktqy.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority&appName=Cluster-1`)
     .then(() => app.listen(3000))
     .catch((err) => console.log(err));
+
+
+module.exports = app;
