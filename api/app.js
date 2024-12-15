@@ -11,13 +11,11 @@ import { secureAuth } from "./middleware/middleware.js";
 const app = express();
 
 app.use(cors({
-    origin: ['https://staystrong.vercel.app', 'http://localhost:5173'],
+    origin: 'https://staystrong.vercel.app',
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
-
-app.options('/graphql', cors());
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -47,6 +45,6 @@ export default async function handler(req, res) {
         await mongoose.connect(MONGO_URI);
     }
 
-    // Pass the Express app to Vercel's serverless handler
+
     await app(req, res);
 }
