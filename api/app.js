@@ -17,6 +17,8 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
+app.options('/graphql', cors());
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(secureAuth);
