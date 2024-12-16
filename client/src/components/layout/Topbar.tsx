@@ -21,7 +21,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 flex justify-between p-5 pt-4">
+    <div className="navbar bg-base-100 flex justify-between px-3 pt-4">
       <div>
         <NavLink to="/" className="flex items-center gap-1 text-xl">
           <img src="/favicon-ss.png" alt="Logo" /> StayStrong
@@ -35,7 +35,7 @@ const Topbar = () => {
             role="button"
             className="m-1 p-[6px] bg-base-300 rounded-full"
           >
-            <HiMiniUser size={26} />
+            <HiMiniUser size={28} />
           </div>
           <ul
             tabIndex={0}
