@@ -63,7 +63,7 @@ const SelectWorkoutType = ({
     fetchTypes();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <span className="loading loading-dots loading-md"></span>;
   if (error) return <div>Error: {error}</div>;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
