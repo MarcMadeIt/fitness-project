@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { format } from "date-fns";
 import { WorkoutLog } from "../../../../store/workout/workoutSlice";
 import Skeleton from "../elements/Skeleton";
+import NoSessions from "../elements/NoSessions";
 
 interface WorkoutSession {
   creator: {
@@ -64,14 +65,23 @@ const Cards = () => {
         });
 
         if (response.status === 200) {
-          setListLimitSessions(response.data.data.getWorkoutLimitSessions);
+          const sessions = response.data.data.getWorkoutLimitSessions;
+          if (sessions.length === 0) {
+            // If no sessions are returned, just reset the sessions state without error
+            setListLimitSessions([]);
+          } else {
+            setListLimitSessions(sessions);
+          }
         } else {
+          // If status is not 200, set the error
           setError("Failed to fetch sessions: " + response.statusText);
         }
       } catch (err) {
         if (err instanceof AxiosError) {
+          // Log and display Axios error
           setError("Error fetching sessions: " + err.message);
         } else {
+          // Handle other errors
           setError("Unknown error occurred.");
         }
       } finally {
@@ -102,10 +112,10 @@ const Cards = () => {
           </div>
           {loading && <Skeleton />}
           {!loading && !error && listLimitSessions.length === 0 && (
-            <p>No sessions available.</p>
+            <NoSessions />
           )}
-          {!loading && error && <p>{error}</p>}
-          {!loading && listLimitSessions.length > 0 && (
+          {error && !loading && <p>{error}</p>}
+          {!loading && !error && listLimitSessions.length > 0 && (
             <div className="flex flex-col md:flex-row flex-wrap gap-6 justify-evenly">
               {listLimitSessions.map((session, index) => (
                 <Card

@@ -89,15 +89,16 @@ const workoutSessionsResolver = {
                 .exec();
 
             if (!workoutSessions.length) {
-                throw new Error("No workout sessions found for this user");
+                return [];
             }
 
             return workoutSessions;
         } catch (error) {
-            console.error("Error in getWorkoutSessions:", error);
+            console.error("Error in getWorkoutLimitSessions:", error);
             throw new Error("Failed to fetch workout sessions for user");
         }
     },
+
 
 
 
