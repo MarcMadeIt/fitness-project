@@ -3,7 +3,7 @@ import Login from "./Login";
 import Register from "./Register";
 import { useNavigate } from "react-router-dom";
 
-//Protected Route Modal, when visit a place without login, there will come a Modal.
+//Protected Route Modal, when visit a place without login, there will come a Login Modal.
 
 interface RouteProps {
   defaultOpen: "login" | "register";

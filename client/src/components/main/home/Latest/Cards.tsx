@@ -67,21 +67,17 @@ const Cards = () => {
         if (response.status === 200) {
           const sessions = response.data.data.getWorkoutLimitSessions;
           if (sessions.length === 0) {
-            // If no sessions are returned, just reset the sessions state without error
             setListLimitSessions([]);
           } else {
             setListLimitSessions(sessions);
           }
         } else {
-          // If status is not 200, set the error
           setError("Failed to fetch sessions: " + response.statusText);
         }
       } catch (err) {
         if (err instanceof AxiosError) {
-          // Log and display Axios error
           setError("Error fetching sessions: " + err.message);
         } else {
-          // Handle other errors
           setError("Unknown error occurred.");
         }
       } finally {

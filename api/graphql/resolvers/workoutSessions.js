@@ -1,6 +1,5 @@
 import WorkoutSession from '../../models/WorkoutSession.js'
 
-
 const workoutSessionsResolver = {
 
     getWorkoutSessions: async (_, req) => {
@@ -26,7 +25,7 @@ const workoutSessionsResolver = {
                 .exec();
 
             if (!workoutSessions.length) {
-                throw new Error("No workout sessions found for this user");
+                return [];
             }
 
             return workoutSessions;

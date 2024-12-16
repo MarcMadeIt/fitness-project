@@ -35,7 +35,6 @@ const workoutLogsResolver = {
                 creator: userId,
             });
 
-            // Save workout log
             const result = await log.save();
 
             return { ...result._doc };

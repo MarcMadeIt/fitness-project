@@ -27,7 +27,6 @@ app.use(secureAuth);
 app.use(
     "/graphql",
     graphqlHTTP((req, res) => {
-
         return {
             schema: graphQlSchema,
             rootValue: rootResolver,

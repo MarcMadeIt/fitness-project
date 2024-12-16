@@ -18,7 +18,7 @@ const TabBar = ({ activeTab, setActiveTab }: TabBarProps) => {
         className={`tab ${activeTab === "allActivities" ? "tab-active" : ""}`}
         onClick={() => setActiveTab("allActivities")}
       >
-        All Activities
+        Global Activities
       </a>
     </div>
   );

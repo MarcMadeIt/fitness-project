@@ -21,7 +21,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 flex justify-between p-5s pt-4">
+    <div className="navbar bg-base-100 flex justify-between p-5 pt-4">
       <div>
         <NavLink to="/" className="flex items-center gap-1 text-xl">
           <img src="/favicon-ss.png" alt="Logo" /> StayStrong
