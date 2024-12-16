@@ -88,7 +88,7 @@ const ActivityListAll = () => {
   return (
     <>
       {loading && (
-        <span className="loading loading-dots loading-lg mt-10"></span>
+        <span className="loading loading-dots loading-lg mt-10 text-primary"></span>
       )}
       {!loading && !error && listSessions.length === 0 && (
         <p>No sessions available.</p>

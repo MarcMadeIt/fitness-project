@@ -90,7 +90,9 @@ const Progress = () => {
         <h3>My Progress</h3>
       </div>
       <div className="flex flex-col items-center justify-center gap-3 bg-base-200 w-full rounded-lg py-8">
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <span className="loading loading-spinner text-primary loading-lg"></span>
+        )}
         {error && <p>{error}</p>}
         {!loading && !error && (
           <div
