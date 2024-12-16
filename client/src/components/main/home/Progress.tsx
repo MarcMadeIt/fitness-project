@@ -89,7 +89,7 @@ const Progress = () => {
       <div className="mb-3 text-sm pl-2">
         <h3>My Progress</h3>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3 bg-base-200 w-full rounded-lg py-8">
+      <div className="flex flex-col items-center justify-center gap-3 bg-base-200 w-full h-60 rounded-lg py-8">
         {loading && (
           <span className="loading loading-spinner text-primary loading-lg"></span>
         )}

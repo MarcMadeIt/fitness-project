@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card = ({ date, totalWorkouts, totalWeight, creator }: CardProps) => {
   return (
-    <div className="bg-base-300 rounded-xl h-44 w-full lg:w-[460px] shadow-xl z-0 flex flex-col overflow-hidden relative">
+    <div className="bg-base-300 rounded-xl h-44 w-full lg:w-[475px] shadow-xl z-0 flex flex-col overflow-hidden relative">
       <div className="flex-initial h-16 bg-base-300 z-2 flex items-center px-5 justify-between">
         <span className="font-xs">{date}</span>
         <span className="text-primary">@{creator}</span>
