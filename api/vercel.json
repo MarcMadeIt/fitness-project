@@ -1,15 +1,15 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "cd client && npm install && ./node_modules/vite/bin/vite.js build",
+  "outputDirectory": "client/dist",
+  "framework": "vite",
+  "rewrites": [
     {
-      "src": "./app.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
+      "source": "/graphql",
+      "destination": "/api/app.js"
+    },
     {
-      "src": "/(.*)",
-      "dest": "/"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
