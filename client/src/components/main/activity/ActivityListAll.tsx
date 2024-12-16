@@ -87,9 +87,14 @@ const ActivityListAll = () => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {listSessions.length > 0 ? (
+      {loading && (
+        <span className="loading loading-dots loading-lg mt-10"></span>
+      )}
+      {!loading && !error && listSessions.length === 0 && (
+        <p>No sessions available.</p>
+      )}
+      {!loading && error && <p>{error}</p>}
+      {!loading && listSessions.length > 0 && (
         <div className="flex flex-col gap-3">
           {listSessions.map((session, index) => (
             <div
@@ -108,8 +113,6 @@ const ActivityListAll = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p>No sessions available.</p>
       )}
     </>
   );

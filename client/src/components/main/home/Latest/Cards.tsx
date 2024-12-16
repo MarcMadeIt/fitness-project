@@ -3,6 +3,7 @@ import Card from "./Card";
 import axios, { AxiosError } from "axios";
 import { format } from "date-fns";
 import { WorkoutLog } from "../../../../store/workout/workoutSlice";
+import Skeleton from "../elements/Skeleton";
 
 interface WorkoutSession {
   creator: {
@@ -99,9 +100,12 @@ const Cards = () => {
           <div className="mb-3 text-sm pl-2 ">
             <h3>My latest</h3>
           </div>
-          {loading && <p>Loading...</p>}
-          {error && <p>{error}</p>}
-          {listLimitSessions.length > 0 ? (
+          {loading && <Skeleton />}
+          {!loading && !error && listLimitSessions.length === 0 && (
+            <p>No sessions available.</p>
+          )}
+          {!loading && error && <p>{error}</p>}
+          {!loading && listLimitSessions.length > 0 && (
             <div className="flex flex-col md:flex-row flex-wrap gap-6 justify-evenly">
               {listLimitSessions.map((session, index) => (
                 <Card
@@ -113,8 +117,6 @@ const Cards = () => {
                 />
               ))}
             </div>
-          ) : (
-            <p>No sessions available.</p>
           )}
         </div>
       </div>

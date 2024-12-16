@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from 'dotenv';
 import bodyParser from "body-parser";
 import { graphqlHTTP } from "express-graphql";
 import mongoose from "mongoose";
@@ -7,6 +8,8 @@ import cors from "cors";
 import graphQlSchema from "./graphql/schemas/index.js";
 import rootResolver from "./graphql/resolvers/index.js";
 import { secureAuth } from "./middleware/middleware.js";
+
+dotenv.config();
 
 const app = express();
 

@@ -8,6 +8,11 @@ interface SelectWorkoutTypeProps {
   selectedType: string;
 }
 
+const graphqlEndpoint =
+  process.env.NODE_ENV === "production"
+    ? "https://staystrong.vercel.app/graphql"
+    : "http://localhost:3000/graphql";
+
 const SelectWorkoutType = ({
   handleSelectChange,
   selectedType,
@@ -35,16 +40,12 @@ const SelectWorkoutType = ({
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:3000/graphql",
-          requestBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.post(graphqlEndpoint, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
 
         if (response.data?.data?.getWorkoutTypes) {
           setWorkoutTypes(response.data.data.getWorkoutTypes);
