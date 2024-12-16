@@ -63,9 +63,6 @@ const SelectWorkoutType = ({
     fetchTypes();
   }, []);
 
-  if (loading) return <span className="loading loading-dots loading-md"></span>;
-  if (error) return <div>Error: {error}</div>;
-
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = e.target.value;
     const selectedType =
@@ -83,11 +80,19 @@ const SelectWorkoutType = ({
       <option value="" disabled>
         Choose type
       </option>
-      {workoutTypes.map((type) => (
-        <option key={type._id} value={type._id}>
-          {type.name}
+      {loading ? (
+        <option disabled>
+          <span className="loading loading-dots loading-md"></span>
         </option>
-      ))}
+      ) : error ? (
+        <option disabled>{error}</option>
+      ) : (
+        workoutTypes.map((type) => (
+          <option key={type._id} value={type._id}>
+            {type.name}
+          </option>
+        ))
+      )}
     </select>
   );
 };
