@@ -60,6 +60,15 @@ Følg disse trin for at installere og starte applikationen:
    npm start
    ```
 
+
+   Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
+
+
+   Frontend: http://localhost:5173
+   Backend: http://localhost:3000
+
+   
+
 ## Database tilknytning
 
 4. **Opret MongoDB database (hvis du ikke allerede har)**
@@ -83,7 +92,4 @@ Følg disse trin for at installere og starte applikationen:
    SECURE_KEY=lav-en-unik-nøgle
    ```
 
-Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
 
-Frontend: http://localhost:5173
-Backend: http://localhost:3000
