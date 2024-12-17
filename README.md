@@ -82,7 +82,7 @@ Følg disse trin for at installere og starte applikationen:
    
 
 6. **Tilføj miljøvariabler**:
-   - Tilføj .env fil til "api" og derefter tilføj dine miljøvariabler 
+   - Tilføj .env fil til "api" og derefter tilføj dine nødvendige miljøvariabler 
    - Eksempel på .env
    ```bash
    MONGO_USERNAME=brugernavn-til-din-mongodb-database
