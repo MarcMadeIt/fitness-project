@@ -66,10 +66,10 @@ Følg disse trin for at installere og starte applikationen:
 
    Hvis du ønsker at køre applikationen med din egen database, kan du følge disse trin:
 
-1. Opret en konto på [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (eller en anden databaseudbyder).
-2. Opret en ny database og en ny bruger med de nødvendige rettigheder.
-3. Kopier **MONGO_URI** fra din databaseforbindelse og indsæt den i din egen **.env**-fil.
-4. Du kan nu køre applikationen med din egen database.
+      - Opret en konto på [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (eller en anden databaseudbyder).
+      - Opret en ny database og en ny bruger med de nødvendige rettigheder.
+      - Kopier **MONGO_URI** fra din databaseforbindelse og indsæt den i din egen **.env**-fil.
+      - Du kan nu køre applikationen med din egen database.
    
 
 6. **Tilføj miljøvariabler**:
