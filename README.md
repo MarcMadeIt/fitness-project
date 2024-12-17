@@ -32,7 +32,7 @@ Følg disse trin for at installere og starte applikationen:
 
 1. **Klon projektet**:
    ```bash
-   git clone https://github.com/MarcMadeIt/fitness-tracker.git
+   git clone https://github.com/MarcMadeIt/fitness-projekt.git
    cd fitness-tracker
    ```
 
