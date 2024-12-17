@@ -95,9 +95,9 @@ Følg disse trin for at installere og starte applikationen:
 
 ## Afslutning
 
-Tak fordi du har taget dig tid til at gennemgå og teste applikationen. Dette Fitness Tracker-projekt, StayStrong, giver brugerne mulighed for at spore deres træning og oprette nye træningsøvelser. Det er bygget med moderne webteknologier og er designet til at være både effektiv og brugervenlig.
+Tak fordi du har taget dig tid til at gennemgå og teste applikationen.
 
-Jeg håber, du får en god oplevelse med at bruge applikationen og udforske dens funktionalitet. Hvis du har nogen spørgsmål, forslag til forbedringer eller ønsker at bidrage til projektet, er du meget velkommen til at åbne et issue eller sende et pull request.
+Jeg håber, du får en god oplevelse med at bruge applikationen og udforske dens funktionalitet. Hvis du har nogen spørgsmål, forslag til forbedringer, er du meget velkommen til at åbne et issue eller sende et pull request.
 
 ## Fremtidige forbedringer
 
