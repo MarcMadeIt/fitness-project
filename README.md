@@ -93,22 +93,21 @@ Følg disse trin for at installere og starte applikationen:
    ```
 
 
-
-##Afslutning
+## Afslutning
 
 Tak fordi du har taget dig tid til at gennemgå og teste applikationen. Dette Fitness Tracker-projekt, StayStrong, giver brugerne mulighed for at spore deres træning og oprette nye træningsøvelser. Det er bygget med moderne webteknologier og er designet til at være både effektiv og brugervenlig.
 
 Jeg håber, du får en god oplevelse med at bruge applikationen og udforske dens funktionalitet. Hvis du har nogen spørgsmål, forslag til forbedringer eller ønsker at bidrage til projektet, er du meget velkommen til at åbne et issue eller sende et pull request.
 
-##Fremtidige forbedringer
+## Fremtidige forbedringer
 
 - Udvidelse af træningsmål og aktiviteter
--- Implementer mål for træningstid, distance og kalorier, samt flere aktiviteter som løb og cykling for at gøre applikationen mere alsidig.
+   - Implementer mål for træningstid, distance og kalorier, samt flere aktiviteter som løb og cykling for at gøre applikationen mere alsidig.
 
 - Brugerindstillinger og datakontrol
--- Giv brugerne mulighed for at redigere personlige oplysninger, ændre adgangskode og justere træningssessioner.
+   - Giv brugerne mulighed for at redigere personlige oplysninger, ændre adgangskode og justere træningssessioner.
 
 - Optimering af struktur og sikkerhed
--- Forbedr Redux-strukturen og implementer stærkere autentifikation med komplekse adgangskoder og mulighed for login via Google/Apple.
+   - Forbedr Redux-strukturen og implementer stærkere autentifikation med komplekse adgangskoder og mulighed for login via Google/Apple.
   
 
