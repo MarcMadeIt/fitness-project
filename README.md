@@ -58,7 +58,30 @@ Følg disse trin for at installere og starte applikationen:
    ```bash
    cd api
    npm start
-   ``` 
+   ```
+
+## Database tilknytning
+
+4. **Opret MongoDB database (hvis du ikke allerede har)**
+
+   Hvis du ønsker at køre applikationen med din egen database, kan du følge disse trin:
+
+1. Opret en konto på [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (eller en anden databaseudbyder).
+2. Opret en ny database og en ny bruger med de nødvendige rettigheder.
+3. Kopier **MONGO_URI** fra din databaseforbindelse og indsæt den i din egen **.env**-fil.
+4. Du kan nu køre applikationen med din egen database.
+   
+
+6. **Tilføj miljøvariabler**:
+   - Tilføj .env fil til "api" og derefter tilføj dine miljøvariabler 
+   - Eksempel på .env
+   ```bash
+   MONGO_USERNAME=brugernavn-til-din-mongodb-database
+   MONGO_PASSWORD=kodeord-til-din-mongodb-database
+   MONGO_DB=fitness-tracker (eventuelt)
+   JWT_SECRET=lav-en-unik-nøgle
+   SECURE_KEY=lav-en-unik-nøgle
+   ```
 
 Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
 
