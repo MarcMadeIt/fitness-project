@@ -1,6 +1,6 @@
 # Fitness Tracker Project
 
-Dette er en README-fil for et fitness tracker-projekt, udviklet med React, Redux, GraphQL og Tailwind CSS.
+Dette er en README-fil for et Fitness Tracker skoleprojekt, udviklet med React, Redux, GraphQL og Tailwind CSS.
 
 ## Projektbeskrivelse
 
