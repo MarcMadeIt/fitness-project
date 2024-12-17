@@ -2,16 +2,16 @@
 
 Projektnavn: StayStrong 
 
-Dette er en README-fil for et Fitness Tracker skoleprojekt, udviklet med React, Redux, GraphQL og Tailwind CSS.
+Dette er en README-fil for en Fitness Tracker webapplikation, udviklet med React, Redux, GraphQL og Tailwind CSS.
 
 ## Projektbeskrivelse
 
-Fitness tracker-applikationen giver brugerne mulighed for at spore deres træning, måle fremskridt og opsætte træningsmål. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
+Fitness tracker-applikationen giver brugerne mulighed for at spore deres træning og oprette nye træningsøvelser. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
 
 ## Teknologier anvendt
 
 - **React** til opbygning af brugergrænsefladen.
-- **Redux Toolkit** til centralisering af state management.
+- **Redux** til centralisering af state management.
 - **GraphQL** til fleksibel og effektiv datahåndtering.
 - **Tailwind CSS** til hurtigt og responsivt design.
 - **DaisyUI** til UI-komponenter baseret på Tailwind CSS.
