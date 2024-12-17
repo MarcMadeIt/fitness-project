@@ -2,16 +2,16 @@
 
 Projektnavn: StayStrong 
 
-Dette er en README-fil for et Fitness Tracker skoleprojekt, udviklet med React, Redux, GraphQL og Tailwind CSS.
+Dette er en README-fil for en Fitness Tracker webapplikation, udviklet med React, Redux, GraphQL og Tailwind CSS.
 
 ## Projektbeskrivelse
 
-Fitness tracker-applikationen giver brugerne mulighed for at spore deres træning, måle fremskridt og opsætte træningsmål. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
+Fitness tracker-applikationen giver brugerne mulighed for at spore deres træning og oprette nye træningsøvelser. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
 
 ## Teknologier anvendt
 
 - **React** til opbygning af brugergrænsefladen.
-- **Redux Toolkit** til centralisering af state management.
+- **Redux** til centralisering af state management.
 - **GraphQL** til fleksibel og effektiv datahåndtering.
 - **Tailwind CSS** til hurtigt og responsivt design.
 - **DaisyUI** til UI-komponenter baseret på Tailwind CSS.
@@ -58,9 +58,56 @@ Følg disse trin for at installere og starte applikationen:
    ```bash
    cd api
    npm start
-   ``` 
+   ```
 
-Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
 
-Frontend: http://localhost:5173
-Backend: http://localhost:3000
+   Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
+
+
+   Frontend: http://localhost:5173
+   Backend: http://localhost:3000
+
+   
+
+## Database tilknytning
+
+4. **Opret MongoDB database (hvis du ikke allerede har)**
+
+   Hvis du ønsker at køre applikationen med din egen database, kan du følge disse trin:
+
+      - Opret en konto på [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (eller en anden databaseudbyder).
+      - Opret en ny database og en ny bruger med de nødvendige rettigheder.
+      - Kopier **MONGO_URI** fra din databaseforbindelse og indsæt den i din egen **.env**-fil.
+      - Du kan nu køre applikationen med din egen database.
+   
+
+6. **Tilføj miljøvariabler**:
+   - Tilføj .env fil til "api" og derefter tilføj dine nødvendige miljøvariabler 
+   - Eksempel på .env
+   ```bash
+   MONGO_USERNAME=brugernavn-til-din-mongodb-database
+   MONGO_PASSWORD=kodeord-til-din-mongodb-database
+   MONGO_DB=fitness-tracker (eventuelt)
+   JWT_SECRET=lav-en-unik-nøgle
+   SECURE_KEY=lav-en-unik-nøgle
+   ```
+
+
+## Afslutning
+
+Tak fordi du har taget dig tid til at gennemgå og teste applikationen.
+
+Jeg håber, du får en god oplevelse med at bruge applikationen og udforske dens funktionalitet. Hvis du har nogen spørgsmål, forslag til forbedringer, er du meget velkommen til at åbne et issue eller sende et pull request.
+
+## Fremtidige forbedringer
+
+- Udvidelse af træningsmål og aktiviteter
+   - Implementer mål for træningstid, distance og kalorier, samt flere aktiviteter som løb og cykling for at gøre applikationen mere alsidig.
+
+- Brugerindstillinger og datakontrol
+   - Giv brugerne mulighed for at redigere personlige oplysninger, ændre adgangskode og justere træningssessioner.
+
+- Optimering af struktur og sikkerhed
+   - Forbedr Redux-strukturen og implementer stærkere autentifikation med komplekse adgangskoder og mulighed for login via Google/Apple.
+  
+
