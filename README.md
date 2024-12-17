@@ -46,28 +46,19 @@ Følg disse trin for at installere og starte applikationen:
    npm install
    ```
 
-   
-For backend (api):
-bash
-Copy code
-cd api
-npm install
-Start applikationen:
+3. **Start applikationen**:
+   - For at køre frontend:
+   ```bash
+   cd client
+   npm run dev
+   ```
+   - For at køre backend:
+   ```bash
+   cd api
+   npm start
+   ``` 
 
-For at køre frontend:
+Når både frontend og backend kører 🥉 vil applikationen være tilgængelig på:
 
-bash
-Copy code
-cd client
-npm run dev
-For at køre backend:
-
-bash
-Copy code
-cd api
-npm start
-Når både frontend og backend kører, vil applikationen være tilgængelig på:
-
-Frontend: http://localhost:3000
-Backend: http://localhost:5000
-
+Frontend: http://localhost:5173
+Backend: http://localhost:3000
