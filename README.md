@@ -32,13 +32,21 @@ Følg disse trin for at installere og starte applikationen:
    ```bash
    git clone https://github.com/dit-brugernavn/fitness-tracker.git
    cd fitness-tracker
-Installer afhængigheder:
+   ```
 
-For frontend (client):
-bash
-Copy code
-cd client
-npm install
+2. **Installer afhængigheder**:
+   - For frontend (client):
+   ```bash
+   cd client
+   npm install
+   ```
+   - For backend (api):
+   ```bash
+   cd api
+   npm install
+   ```
+
+   
 For backend (api):
 bash
 Copy code
