@@ -64,6 +64,12 @@ Efter du har startet applikationen, kan du navigere til frontend og begynde at b
 Licens
 Dette projekt er licenseret under MIT-licensen - se LICENSE.md for detaljer.
 
+css
 Copy code
 
-Denne version indeholder ikke sektionen om bidrag, men indeholder alle nødvendige op
+Nu er den korrekt formateret til at blive indsat i en README-fil på GitHub, og det vil blive vist som kodelinjer i rigtige kodeblokke. Du kan bare kopiere og indsætte den i din README.md-fil.
+
+
+
+
+
