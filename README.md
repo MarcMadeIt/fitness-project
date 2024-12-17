@@ -1,76 +1,69 @@
-Teknisk Dokumentation
+# Fitness Tracker Projekt
 
-1. Forudsætninger
-   Før du begynder, skal du sikre dig, at følgende værktøjer er installeret:
+## Beskrivelse
+Dette projekt er en **fitness tracker**-applikation, hvor brugere kan spore deres træning, måle fremskridt og opsætte træningsmål. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
 
-Node.js (version 14.x eller højere)
-npm eller Yarn
-Git (valgfrit, men anbefales) 2. Opsætning af Projektet
-2.1 Klon Repositoriet
-Klon projektet fra GitHub:
+## Teknologier Brugte
+- **Frontend:**
+  - React
+  - Redux Toolkit
+  - GraphQL
+  - Tailwind CSS
+  - DaisyUI (komponentbibliotek baseret på Tailwind)
+  
+- **Backend:**
+  - Node.js
+  - Express.js
+  - GraphQL
+  
+- **Database:**
+  - MongoDB
 
+## Installation og Kørsel
+For at komme i gang med projektet, følg nedenstående trin.
+
+### 1. Klon Repositoryet
+Først skal du klone repositoryet til din lokale maskine.
+
+```bash
+git clone <repo-link>
+cd <repo-mappenavn>
+2. Installer Afhængigheder
+Kør følgende kommandoer i både client og api mapperne:
+
+For at installere frontend-afhængigheder:
 bash
 Copy code
-git clone https://github.com/din-bruger/fitness-tracker.git
-cd fitness-tracker
-2.2 Installer Afhængigheder
-Installér de nødvendige afhængigheder:
-
-Med npm:
-
-bash
-Copy code
+cd client
 npm install
-Med Yarn:
-
+For at installere backend-afhængigheder:
 bash
 Copy code
-yarn install 3. Miljøvariabler
-Opret en .env-fil i projektets rodmappe og tilføj følgende miljøvariabler:
+cd api
+npm install
+3. Kør Applikationen
+Når du har installeret afhængighederne, kan du starte både frontend og backend.
 
+Start Frontend:
 bash
 Copy code
-MONGODB_URI=mongodb://localhost:27017/fitness-tracker
-JWT_SECRET=dinhemmeligejwtkode
-GRAPHQL_URI=http://localhost:4000/graphql 4. Kør Projektet
-4.1 Udviklingsmiljø
-For at køre både frontend og backend i udviklingsmiljøet:
-
-Start frontend (React) i udviklingsmode:
-bash
-Copy code
+cd client
 npm run dev
-Start backend (Node.js/Express) i udviklingsmode:
+Start Backend:
 bash
 Copy code
+cd api
 npm start
-Applikationen vil nu være tilgængelig på http://localhost:3000.
+Applikationen vil nu køre lokalt på:
 
-4.2 Produktionsmiljø
-For at køre applikationen i produktionsmode:
+Frontend: http://localhost:3000
+Backend: http://localhost:5000
+Test Applikationen
+Efter du har startet applikationen, kan du navigere til frontend og begynde at bruge fitness tracker-funktionerne.
 
-Byg frontend:
-bash
+Licens
+Dette projekt er licenseret under MIT-licensen - se LICENSE.md for detaljer.
+
 Copy code
-npm run build
-Start produktion serveren:
-bash
-Copy code
-npm start 5. Test Projektet
-5.1 Enhedstests
-Kør testene med følgende kommando:
 
-Med npm:
-
-bash
-Copy code
-npm test
-Med Yarn:
-
-bash
-Copy code
-yarn test 6. Deployment
-For deployment kan du bruge Vercel eller Heroku.
-
-Vercel: Brug Vercels GitHub-integration til nemt at deploye din app.
-Heroku: Følg Heroku’s dokumentation for at deploye Node.js-applikationer.
+Denne version indeholder ikke sektionen om bidrag, men indeholder alle nødvendige op
