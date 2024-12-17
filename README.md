@@ -1,75 +1,65 @@
-# Fitness Tracker Projekt
+# Fitness Tracker Project
 
-## Beskrivelse
-Dette projekt er en **fitness tracker**-applikation, hvor brugere kan spore deres træning, måle fremskridt og opsætte træningsmål. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
+Dette er en README-fil for et fitness tracker-projekt, udviklet med React, Redux, GraphQL og Tailwind CSS.
 
-## Teknologier Brugte
-- **Frontend:**
-  - React
-  - Redux Toolkit
-  - GraphQL
-  - Tailwind CSS
-  - DaisyUI (komponentbibliotek baseret på Tailwind)
-  
-- **Backend:**
-  - Node.js
-  - Express.js
-  - GraphQL
-  
-- **Database:**
-  - MongoDB
+## Projektbeskrivelse
 
-## Installation og Kørsel
-For at komme i gang med projektet, følg nedenstående trin.
+Fitness tracker-applikationen giver brugerne mulighed for at spore deres træning, måle fremskridt og opsætte træningsmål. Applikationen er bygget med moderne teknologier som **Redux** til state management, **GraphQL** til datahåndtering, og **Tailwind CSS** til styling.
 
-### 1. Klon Repositoryet
-Først skal du klone repositoryet til din lokale maskine.
+## Teknologier anvendt
 
-```bash
-git clone <repo-link>
-cd <repo-mappenavn>
-2. Installer Afhængigheder
-Kør følgende kommandoer i både client og api mapperne:
+- **React** til opbygning af brugergrænsefladen.
+- **Redux Toolkit** til centralisering af state management.
+- **GraphQL** til fleksibel og effektiv datahåndtering.
+- **Tailwind CSS** til hurtigt og responsivt design.
+- **DaisyUI** til UI-komponenter baseret på Tailwind CSS.
+- **Node.js** og **Express.js** til backend.
+- **MongoDB** som database.
 
-For at installere frontend-afhængigheder:
+## Forudsætninger
+
+Før du kan køre projektet, skal du have følgende installeret:
+
+- **Node.js** (mindst version 14 eller nyere)
+
+Du kan downloade og installere Node.js fra den officielle [Node.js hjemmeside](https://nodejs.org/).
+
+## Installation og opsætning
+
+Følg disse trin for at installere og starte applikationen:
+
+1. **Klon projektet**:
+   ```bash
+   git clone https://github.com/dit-brugernavn/fitness-tracker.git
+   cd fitness-tracker
+Installer afhængigheder:
+
+For frontend (client):
 bash
 Copy code
 cd client
 npm install
-For at installere backend-afhængigheder:
+For backend (api):
 bash
 Copy code
 cd api
 npm install
-3. Kør Applikationen
-Når du har installeret afhængighederne, kan du starte både frontend og backend.
+Start applikationen:
 
-Start Frontend:
+For at køre frontend:
+
 bash
 Copy code
 cd client
 npm run dev
-Start Backend:
+For at køre backend:
+
 bash
 Copy code
 cd api
 npm start
-Applikationen vil nu køre lokalt på:
+Når både frontend og backend kører, vil applikationen være tilgængelig på:
 
 Frontend: http://localhost:3000
 Backend: http://localhost:5000
-Test Applikationen
-Efter du har startet applikationen, kan du navigere til frontend og begynde at bruge fitness tracker-funktionerne.
-
-Licens
-Dette projekt er licenseret under MIT-licensen - se LICENSE.md for detaljer.
-
-css
-Copy code
-
-Nu er den korrekt formateret til at blive indsat i en README-fil på GitHub, og det vil blive vist som kodelinjer i rigtige kodeblokke. Du kan bare kopiere og indsætte den i din README.md-fil.
-
-
-
-
 
