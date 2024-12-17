@@ -32,66 +32,58 @@ const AddType = ({ onClose }: AddTypeProps) => {
 
   const handleAddType = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!token) {
-      setError("User is not authenticated. Please log in again.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
-    setTimeout(async () => {
-      const requestBody = {
-        query: `
-          mutation {
-            createWorkoutType(
-              workoutTypeInput: {
-                name: "${name}",
-                desc: "${desc}",
-                part: "${part}"
-              }
-            ) {
-              name
-              desc
-              part
-              creator {
-                _id 
-                username
-              }
+    const requestBody = {
+      query: `
+        mutation {
+          createWorkoutType(
+            workoutTypeInput: {
+              name: "${name}",
+              desc: "${desc}",
+              part: "${part}"
+            }
+          ) {
+            name
+            desc
+            part
+            creator {
+              _id 
+              username
             }
           }
-        `,
-      };
-
-      try {
-        const response = await axios.post(graphqlEndpoint, requestBody, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        });
-
-        const result = response.data;
-
-        if (response.status === 200 && !result.errors) {
-          console.log("WorkoutType created:", result);
-          onClose();
-          clearForm();
-          setAlertMessage("WorkoutType created successfully!");
-        } else {
-          const errorMessage =
-            result.errors?.[0]?.message || "Something went wrong.";
-          setError(errorMessage);
         }
-      } catch (err) {
-        console.error("Error:", err);
-        setError("Something went wrong");
-      } finally {
-        setLoading(false);
+      `,
+    };
+
+    try {
+      const response = await axios.post(graphqlEndpoint, requestBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
+      const result = response.data;
+
+      if (response.status === 200 && !result.errors) {
+        console.log("WorkoutType created:", result);
+        onClose();
+        clearForm();
+        setAlertMessage("WorkoutType created successfully!");
+      } else {
+        const errorMessage =
+          result.errors?.[0]?.message || "Something went wrong.";
+        setError(errorMessage);
       }
-    }, 2000);
+    } catch (err) {
+      console.error("Error:", err);
+      setError("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

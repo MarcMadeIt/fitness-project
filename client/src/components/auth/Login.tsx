@@ -34,43 +34,41 @@ const Login = ({ isOpen, closeModal, openRegisterModal }: LoginProps) => {
     setLoading(true);
     setError(null);
 
-    setTimeout(async () => {
-      const requestBody = {
-        query: `
-          query {
-            login(username: "${username}", password: "${password}") {
-              token
-            }
-          }
-        `,
-      };
-
-      try {
-        const response = await axios.post(graphqlEndpoint, requestBody, {
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const result = response.data;
-
-        if (result.errors) {
-          setError(result.errors[0]?.message || "Something went wrong.");
-        } else {
-          if (result.data?.login?.token) {
-            const { token } = result.data.login;
-            localStorage.setItem("token", token);
-            dispatch(login({ token }));
-            closeModal();
-            clearForm();
-          } else {
-            setError("Unexpected error: No token received.");
+    const requestBody = {
+      query: `
+        query {
+          login(username: "${username}", password: "${password}") {
+            token
           }
         }
-      } catch (err) {
-        setError("Wrong Credentials, try again");
-      } finally {
-        setLoading(false);
+      `,
+    };
+
+    try {
+      const response = await axios.post(graphqlEndpoint, requestBody, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const result = response.data;
+
+      if (result.errors) {
+        setError(result.errors[0]?.message || "Something went wrong.");
+      } else {
+        if (result.data?.login?.token) {
+          const { token } = result.data.login;
+          localStorage.setItem("token", token);
+          dispatch(login({ token }));
+          closeModal();
+          clearForm();
+        } else {
+          setError("Unexpected error: No token received.");
+        }
       }
-    }, 2000);
+    } catch (err) {
+      setError("Wrong Credentials, try again");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
