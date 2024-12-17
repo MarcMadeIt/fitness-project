@@ -10,11 +10,11 @@ const Hero = () => {
   return (
     <>
       <div className="hero bg-base-200  rounded-xl ">
-        <div className="hero-content text-center px-4 py-6 flex-col md:flex-row">
+        <div className="hero-content text-center lg:gap-16  px-4 py-6 flex-col md:flex-row ">
           <div className="relative">
             <img
               src="/fitness1.jpg"
-              className="sm:max-w-xs rounded-lg shadow-2xl opacity-90"
+              className="sm:max-w-xs lg:max-w-lg  rounded-lg shadow-2xl opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-base-300 opacity-90 rounded-lg"></div>
           </div>

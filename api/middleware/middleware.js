@@ -11,6 +11,7 @@ export const secureAuth = (req, res, next) => {
     if (!token) {
         console.log("No token found");
         req.userId = null;
+        req.secureAuth = false;
         return next();
     }
 
@@ -18,10 +19,12 @@ export const secureAuth = (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decodedToken.userId;
         req.username = decodedToken.username;
+        req.secureAuth = true;
         return next();
     } catch (err) {
         console.error("Token verification failed:", err.message);
         req.userId = null;
+        req.secureAuth = false;
         return next();
     }
 };

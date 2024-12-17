@@ -7,7 +7,7 @@ const AddOverview = () => {
   const { totalWeight, totalSets } = useSelector(totalAmount);
   return (
     <div className="bg-base-300 flex flex-row lg:flex-col justify-between lg:justify-start gap-3 p-5 rounded-2xl ">
-      <h3 className="text-primary">Overview</h3>
+      <h3 className="text-primary">Session Total</h3>
       <hr className="h-0 w-full border-1 border-slate-600 hidden lg:block" />
       <div className="flex flex-row lg:flex-col gap-3">
         <h5 className="text-sm flex items-center gap-2">

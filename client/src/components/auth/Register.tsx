@@ -2,6 +2,8 @@ import { useState } from "react";
 import { HiMiniKey, HiMiniUser, HiShieldCheck } from "react-icons/hi2";
 import Alert from "../messages/Alert";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/auth/authSlice";
 
 type RegisterProps = {
   isOpen: boolean;
@@ -22,6 +24,7 @@ const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
   const [error, setError] = useState<string | null>(null);
   const [passwordsMatch, setPasswordsMatch] = useState<boolean>(true);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const dispatch = useDispatch();
 
   const clearForm = () => {
     setUsername("");
@@ -52,6 +55,7 @@ const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
             createUser(userInput: { username: "${username}", password: "${password}" }) {
               _id
               username
+              token
             }
           }
         `,
@@ -68,7 +72,11 @@ const Register = ({ isOpen, closeModal, openLoginModal }: RegisterProps) => {
       const result = response.data;
 
       if (response.status === 200 && !result.errors) {
-        console.log("User created:", result);
+        const { token } = result.data.createUser;
+
+        dispatch(login({ token }));
+        localStorage.setItem("token", token);
+
         closeModal();
         clearForm();
         setAlertMessage("User created successfully!");

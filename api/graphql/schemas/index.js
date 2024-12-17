@@ -32,6 +32,7 @@ const graphQlSchema = buildSchema(`
         username: String!
         password: String
         createdWorkout: [WorkoutType!]
+        token: String!
     }
 
     type AuthData {

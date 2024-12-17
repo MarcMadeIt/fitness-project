@@ -26,8 +26,8 @@ const Alert = ({ message, onClose }: AlertProps) => {
       className="alert flex items-center gap-2 absolute top-3 left-1/2 transform -translate-x-1/2 p-4 z-10 w-[92%] md:w-1/2 lg:w-1/3"
       onClick={() => setVisible(false)}
     >
-      <span className="text-primary">
-        <HiOutlineCheckCircle size={28} />
+      <span className="text-primary text-xl lg:text-2xl">
+        <HiOutlineCheckCircle />
       </span>
       <span>{message}</span>
     </div>

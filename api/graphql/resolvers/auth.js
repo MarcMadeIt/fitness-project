@@ -30,12 +30,25 @@ const authResolver = {
 
             const result = await user.save();
 
-            return { ...result._doc, password: null };
+            const token = jwt.sign(
+                { userId: result._id.toString(), username: result.username },
+                process.env.JWT_SECRET,
+                { expiresIn: '3h' }
+            );
+
+            return {
+                ...result._doc,
+                _id: result._id.toString(),
+                password: null,
+                token,
+            };
 
         } catch (err) {
             throw new Error(err.message);
         }
     },
+
+
 
     login: async ({ username, password }, { req, res }) => {
         try {

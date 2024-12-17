@@ -23,7 +23,10 @@ const Topbar = () => {
   return (
     <div className="navbar bg-base-100 flex justify-between px-3 pt-4">
       <div>
-        <NavLink to="/" className="flex items-center gap-1 text-xl">
+        <NavLink
+          to="/"
+          className="flex items-center gap-1 text-xl tracking-tighter"
+        >
           <img src="/favicon-ss.png" alt="Logo" /> StayStrong
         </NavLink>
       </div>
@@ -44,9 +47,7 @@ const Topbar = () => {
             <div className="px-4 py-2 flex gap-2 text-primary">
               <span>@{username}</span>
             </div>
-            <li>
-              <span>Settings</span>
-            </li>
+
             <li>
               <button onClick={handleLogout}>Log out</button>
             </li>
