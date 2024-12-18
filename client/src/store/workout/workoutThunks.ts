@@ -79,7 +79,7 @@ export const submitWorkoutSession = createAsyncThunk(
       const sessionResponse = await axios.post(graphqlEndpoint, sessionQuery, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,  // Include token in headers
+          Authorization: `Bearer ${token}`,  
         },
       });
 

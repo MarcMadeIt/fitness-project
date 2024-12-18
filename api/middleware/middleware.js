@@ -9,7 +9,6 @@ export const secureAuth = (req, res, next) => {
     }
 
     if (!token) {
-        console.log("No token found");
         req.userId = null;
         req.secureAuth = false;
         return next();

@@ -5,6 +5,8 @@ import { RootState } from "../store/store";
 import RouteModal from "../components/auth/RouteModal";
 import { showLoginModal } from "../store/auth/authSlice";
 
+// Sikre at adgangen kun er for brugere med token igennem Redux useSelector... når man fx går over på sider som /add eller /activity
+
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
@@ -16,7 +18,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      dispatch(showLoginModal(true)); // Show modal if not authenticated
+      dispatch(showLoginModal(true));
     }
   }, [isAuthenticated, dispatch]);
 

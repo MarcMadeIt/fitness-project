@@ -49,7 +49,6 @@ const authResolver = {
     },
 
 
-
     login: async ({ username, password }, { req, res }) => {
         try {
             const user = await Users.findOne({ username: username.toLowerCase() });
